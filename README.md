@@ -14,7 +14,7 @@ Set these variables in a run command or elsewhere:
 ``` docker build -t jekyll-builder-git . ```
 
 ## Sample Docker Run Command
-```docker run \
+``` docker run \
   --rm \
   -it \
   -e "GIT_HOST=github.com" \
@@ -24,5 +24,5 @@ Set these variables in a run command or elsewhere:
   -e "KEY=-----BEGIN RSA PRIVATE KEY-----
 1234567890
 -----END RSA PRIVATE KEY-----"  \
-  jekyll-builder-git```
+  jekyll-builder-git ```
   
