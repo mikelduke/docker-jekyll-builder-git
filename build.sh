@@ -1,21 +1,25 @@
 #!/bin/bash
 
-#Pull host ssh keys
+echo 'Pull host ssh keys'
 mkdir ~/.ssh
 touch ~/.ssh/known_hosts
 ssh-keyscan $GIT_HOST >> ~/.ssh/known_hosts
 ssh-keyscan $SCP_HOST >> ~/.ssh/known_hosts
 
-#Add private key from environment var
+echo 'Add private key from environment var'
 echo "$KEY" > ~/.ssh/id_rsa
 chmod 400 ~/.ssh/id_rsa
 
-#Clone Jekyll project repo
-git clone $GIT_REPO .
+echo 'Clone Jekyll project repo'
+git clone $GIT_REPO ~/jekyll
 
-jekyll build
+echo 'jekyll build'
+cd /home/jekyll/jekyll
+#gem install bundler
+bundle install
+jekyll build -s ~/jekyll -d ~/jekyll/_site
 
-#Copy to site
-scp -r _site/* $SCP_DEST
+echo 'scp'
+scp -rv -o "BatchMode yes" ~/jekyll/_site/* $SCP_DEST
 
 echo 'done'
