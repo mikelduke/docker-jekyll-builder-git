@@ -7,9 +7,9 @@ RUN chown -R jekyll:root /usr/local/* && \
     chmod -R 777 /usr/local/*
 RUN chmod u+s /sbin/su-exec
 
-ADD build.sh /home/jekyll
-RUN chown jekyll:root /home/jekyll/build.sh && \
-    chmod -R 777 /home/jekyll/build.sh
+ADD build.sh /srv/jekyll/
+RUN chown jekyll:root /srv/jekyll/build.sh && \
+    chmod -R 777 /srv/jekyll/build.sh
 
 USER jekyll
-CMD ["/home/jekyll/build.sh"]
+CMD ["./build.sh"]
