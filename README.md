@@ -1,8 +1,13 @@
 # jekyll-builder-git
 
+Docker image to checkout a git repo, run a jekyll build, and the SCP the generated _site folder to 
+somewhere else.
+
+This lets you use a short lived free Heroku one-off dyno to build a Jekyll app that is hosted somewhere else.
+
 Uses docker image jekyll/builder from https://github.com/jekyll/docker
 
-## Environment Variables
+### Environment Variables
 Set these variables in a run command or elsewhere:
 * GIT_HOST - Hostname for git repo
 * GIT_REPO - Path to git repo
@@ -10,8 +15,7 @@ Set these variables in a run command or elsewhere:
 * SCP_DEST - SCP Copy Destination
 * KEY - Private key for Git over SSH and SCP
 
-## Heroku
-
+# Heroku
 * Create a new app
 ``` heroku create jekyll-builder ```
 * Push the Docker Image
@@ -20,12 +24,23 @@ Set these variables in a run command or elsewhere:
 * Run the builder
 ``` heroku run -a jekyll-builder --type builder bash build.sh ```
 
-## Docker Build
+## Heroku Trigger Script
 
+The script ```run-heroku-jekyll-build.sh``` is an example Heroku API curl request to trigger the 
+jekyll builder. 
+
+* Set your app name in the APP_ID_OR_NAME variable
+* Get a Heroku API Token by running ```heroku auth:token```
+* Set TOKEN= to the token
+* Run ```./run-heroku-jekyll-build.sh``` to trigger a build. 
+* Logs can be viewed from the Heroku Dev console log viewer. Make sure you have it up when 
+running the build, the logs are not saved.
+
+# Docker
+
+* Docker Build
 ``` docker build -t jekyll-builder-git . ```
-
-## Sample Docker Run Command
-
+* Sample Docker Run Command
 ```
 docker run \
   --rm \
